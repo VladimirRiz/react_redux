@@ -12,11 +12,14 @@ export default class AddItem extends Component{
         this.setState({
             label:e.target.value
         })
-    }
+    } 
 
     onSubmit = (e) => {
         e.preventDefault();
-        this.props.addItem(this.state.label)
+        this.props.addItem(this.state.label);
+        this.setState({
+            label:''
+        })
     }
 
     render(){
@@ -26,6 +29,7 @@ export default class AddItem extends Component{
             <input type='text'
                    className='form-control'
                    onChange={this.onLabelChange}
+                   value={this.state.label}
             />
                 <button 
                         className='btn btn-outline-secondary btn-sm float-right'
