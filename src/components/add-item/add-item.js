@@ -16,7 +16,11 @@ export default class AddItem extends Component{
 
     onSubmit = (e) => {
         e.preventDefault();
-        this.props.addItem(this.state.label);
+        const {label } = this.state
+        if(label.length === 0){
+            return false
+        }
+        this.props.addItem(label);
         this.setState({
             label:''
         })
