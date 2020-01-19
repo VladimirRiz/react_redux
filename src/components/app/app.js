@@ -18,7 +18,8 @@ export default class App extends Component{
             this.createToDoItem('Make Awesome App'),
             this.createToDoItem('Have a lunch')
         ],
-        term:''
+        term:'',
+        filter:'done'
     }
 
     createToDoItem(label){
@@ -41,6 +42,23 @@ export default class App extends Component{
 
     onSearch = (term) =>{
         this.setState({term})
+    }
+
+    filter(items,filter){
+        switch(filter){
+            case 'all':
+                return items;
+            case 'active':
+                return items.filter((item) => !item.done);
+            case 'done':
+                return items.filter((item) => item.done);
+            default:
+                return items
+        }
+    }
+
+    onFilter = (filter) =>{
+        this.setState({filter})
     }
 
     deleteItem = (id) =>{
@@ -102,10 +120,10 @@ export default class App extends Component{
 
     render(){
 
-        const {todos,term} = this.state,
+        const {todos,term,filter} = this.state,
               doneCount = todos.filter((el) => el.done).length,
               toDoCount = todos.length - doneCount,
-              visibleItems = this.search(todos,term)
+              visibleItems = this.filter(this.search(todos,term),filter);
 
         return(
             <div className='todo-app'>
@@ -114,7 +132,10 @@ export default class App extends Component{
                     <SearcPanel
                         onSearch={this.onSearch}
                     />
-                    <ItemStatusFilter/>
+                    <ItemStatusFilter
+                        filter={filter}
+                        onFilter={this.onFilter}
+                    />
                 </div>
                 <TodoList 
                     todos = {visibleItems}
