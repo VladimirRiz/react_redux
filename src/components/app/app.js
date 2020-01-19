@@ -15,7 +15,18 @@ export default class App extends Component{
             {label:'Make Awesome App', important:true, id:2},
             {label:'Have a lunch', important:false, id:3}
         ]
+    }
 
+    deleteItem = (id) =>{
+        this.setState(({todos}) =>{
+
+            const idx = todos.findIndex((el) => el.id === id);
+            todos.splice(idx,1);
+            return{
+                todos:todos
+            }
+
+        })
     }
 
     render(){
@@ -31,7 +42,7 @@ export default class App extends Component{
                 </div>
                 <TodoList 
                     todos = {todos}
-                    onDeleted={(id) => console.log('del ', id)}
+                    onDeleted={this.deleteItem}
                 />
             </div>
         )
