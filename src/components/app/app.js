@@ -5,9 +5,12 @@ import AppHeader from '../app-header';
 import SearcPanel from '../search-panel';
 import TodoList from '../todo-list';
 import ItemStatusFilter from '../item-status-filter';
+import AddItem from '../add-item'
 
 
 export default class App extends Component{  
+
+    maxId = 50;
 
     state = {
         todos : [
@@ -33,6 +36,24 @@ export default class App extends Component{
         })
     }
 
+    addItem = (text) =>{
+        const newItem = {
+            label : text,
+            important: false,
+            id:this.maxId++
+        }
+
+        this.setState(({todos}) =>{
+            const newArr = [
+                ...todos,
+                newItem
+            ]
+            return{
+                todos:newArr
+            }
+        })
+    }
+
     render(){
 
         const {todos} = this.state;
@@ -47,6 +68,9 @@ export default class App extends Component{
                 <TodoList 
                     todos = {todos}
                     onDeleted={this.deleteItem}
+                />
+                <AddItem
+                    addItem={this.addItem}
                 />
             </div>
         )
