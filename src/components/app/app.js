@@ -8,14 +8,20 @@ import ItemStatusFilter from '../item-status-filter';
 
 
 export default class App extends Component{  
-    render(){
 
-        const todos = [
+    state = {
+        todos : [
             {label:'Drink Coffee', important:false , id:1},
             {label:'Make Awesome App', important:true, id:2},
             {label:'Have a lunch', important:false, id:3}
         ]
-    
+
+    }
+
+    render(){
+
+        const {todos} = this.state;
+
         return(
             <div className='todo-app'>
                 <AppHeader toDo={3} done={1}/>
